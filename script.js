@@ -15,6 +15,7 @@ function setup() {
     document.getElementById("spawn-delay-slider").value = spawndelay;
     document.getElementById("lerp-speed-slider").value = lerpspeed;
     document.getElementById("circle-size-slider").value = circlesize;
+    document.getElementById("movement-checkbox").checked = true;
     noStroke();
     textAlign(CENTER, CENTER);
     textSize(12);
@@ -26,8 +27,7 @@ function draw() {
     background(0);
     // Draw instruction text 
     fill(255);
-    text("Press R to clear canvas", width / 2, height - 24);
-    text("Spawndelay: " + spawndelay.toString() + " Lerpspeed: " + lerpspeed.toString(), width / 2, height - 12);
+    text("Press R to clear canvas", width / 2, height - 12);
 
     for(let i = 0; i < circles.length; i++) {
         let circ = circles[i];
@@ -87,4 +87,8 @@ document.getElementById("lerp-speed-slider").oninput = function() {
 
 document.getElementById("circle-size-slider").oninput = function() {
     circlesize = this.value;
+}
+
+document.getElementById("movement-checkbox").onchange = function() {
+    movespeed = (this.checked) ? 0.5 : 0.0;
 }
