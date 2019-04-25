@@ -2,6 +2,8 @@
 const SPAWN_SHIFT = 1;
 const LERP_SHIFT = 1;
 // Variables  
+let circlesize = 100;
+let movespeed = 0.5;
 let spawndelay = 10;
 let lerpspeed = 10;
 let lerpdiv = 1000;
@@ -12,18 +14,19 @@ function setup() {
     // Reset HTML sliders 
     document.getElementById("spawn-delay-slider").value = spawndelay;
     document.getElementById("lerp-speed-slider").value = lerpspeed;
+    document.getElementById("circle-size-slider").value = circlesize;
     noStroke();
     textAlign(CENTER, CENTER);
     textSize(12);
     // Draw initial circle so the screen's not so empty lol 
-    circles.push(new Circle(100, lerpspeed / lerpdiv));
+    circles.push(new Circle(circlesize, lerpspeed / lerpdiv, movespeed));
 }
 
 function draw() {
     background(0);
     // Draw instruction text 
     fill(255);
-    text("Press R to clear canvas", width / 2, 12);
+    text("Press R to clear canvas", width / 2, height - 24);
     text("Spawndelay: " + spawndelay.toString() + " Lerpspeed: " + lerpspeed.toString(), width / 2, height - 12);
 
     for(let i = 0; i < circles.length; i++) {
@@ -39,7 +42,7 @@ function draw() {
     // Spawn new circle at interval 
     if(frameCount % spawndelay == 0) {
         // Spawn another circle 
-        circles.push(new Circle(100, lerpspeed / lerpdiv));
+        circles.push(new Circle(circlesize, lerpspeed / lerpdiv, movespeed));
     }
 }
 
@@ -67,7 +70,7 @@ function keyPressed() {
 
 function touchStarted() {
     // Spawn circle when mouse clicked 
-    circles.push(new Circle(100, lerpspeed / lerpdiv, mouseX, mouseY));
+    circles.push(new Circle(circlesize, lerpspeed / lerpdiv, mouseX, mouseY, movespeed));
 }
 
 function randomInt(min, max) {
@@ -80,4 +83,8 @@ document.getElementById("spawn-delay-slider").oninput = function() {
 
 document.getElementById("lerp-speed-slider").oninput = function() {
     lerpspeed = this.value;
+}
+
+document.getElementById("circle-size-slider").oninput = function() {
+    circlesize = this.value;
 }
