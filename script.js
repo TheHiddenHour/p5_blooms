@@ -2,27 +2,29 @@
 const SPAWN_SHIFT = 1;
 const LERP_SHIFT = 1;
 // Variables  
-let spawnrate = 10;
-let lerprate = 10;
+let spawndelay = 10;
+let lerpspeed = 10;
 let lerpdiv = 1000;
 let circles = [];
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
+    // Reset HTML sliders 
+    document.getElementById("spawn-delay-slider").value = spawndelay;
+    document.getElementById("lerp-speed-slider").value = lerpspeed;
     noStroke();
     textAlign(CENTER, CENTER);
     textSize(12);
     // Draw initial circle so the screen's not so empty lol 
-    circles.push(new Circle(100, lerprate / lerpdiv));
+    circles.push(new Circle(100, lerpspeed / lerpdiv));
 }
 
 function draw() {
     background(0);
     // Draw instruction text 
     fill(255);
-    text("Press A/D to change spawndelay and W/S to change lerpspeed", width / 2, 12);
-    text("Press R to clear canvas", width / 2, 36);
-    text("Spawndelay: " + spawnrate.toString() + " Lerpspeed: " + lerprate.toString(), width / 2, height - 12);
+    text("Press R to clear canvas", width / 2, 12);
+    text("Spawndelay: " + spawndelay.toString() + " Lerpspeed: " + lerpspeed.toString(), width / 2, height - 12);
 
     for(let i = 0; i < circles.length; i++) {
         let circ = circles[i];
@@ -35,28 +37,28 @@ function draw() {
     }
 
     // Spawn new circle at interval 
-    if(frameCount % spawnrate == 0) {
+    if(frameCount % spawndelay == 0) {
         // Spawn another circle 
-        circles.push(new Circle(100, lerprate / lerpdiv));
+        circles.push(new Circle(100, lerpspeed / lerpdiv));
     }
 }
 
 function keyPressed() {
     if(keyCode === 65) { // A key 
-        // Spawnrate down 
-        spawnrate -= SPAWN_SHIFT;
+        // spawndelay down 
+        spawndelay -= SPAWN_SHIFT;
     }
     else if(keyCode === 68) { // D key 
-        // Spawnrate up 
-        spawnrate += SPAWN_SHIFT;
+        // spawndelay up 
+        spawndelay += SPAWN_SHIFT;
     }
     else if(keyCode === 87) { // W key 
-        // Lerprate up 
-        lerprate += LERP_SHIFT;
+        // lerpspeed up 
+        lerpspeed += LERP_SHIFT;
     }
     else if(keyCode == 83) { // S key 
-        // Lerprate down 
-        lerprate -= LERP_SHIFT;
+        // lerpspeed down 
+        lerpspeed -= LERP_SHIFT;
     }
     else if(keyCode == 82) { // R key 
         circles = [];
@@ -65,9 +67,17 @@ function keyPressed() {
 
 function mouseClicked() {
     // Spawn circle when mouse clicked 
-    circles.push(new Circle(100, lerprate / lerpdiv, mouseX, mouseY));
+    circles.push(new Circle(100, lerpspeed / lerpdiv, mouseX, mouseY));
 }
 
 function randomInt(min, max) {
     return Math.floor(Math.random() * max) + min;
+}
+
+document.getElementById("spawn-delay-slider").oninput = function() {
+    spawndelay = this.value;
+}
+
+document.getElementById("lerp-speed-slider").oninput = function() {
+    lerpspeed = this.value;
 }
