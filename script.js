@@ -70,7 +70,7 @@ function keyPressed() {
 
 function touchStarted() {
     // Spawn circle when mouse clicked 
-    circles.push(new Circle(circlesize, lerpspeed / lerpdiv, mouseX, mouseY, movespeed));
+    circles.push(new Circle(circlesize, lerpspeed / lerpdiv, movespeed, mouseX, mouseY));
 }
 
 function randomInt(min, max) {
