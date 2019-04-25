@@ -65,7 +65,7 @@ function keyPressed() {
     }
 }
 
-function mouseClicked() {
+function touchStarted() {
     // Spawn circle when mouse clicked 
     circles.push(new Circle(100, lerpspeed / lerpdiv, mouseX, mouseY));
 }
